@@ -2,7 +2,7 @@ import React from "react";
 import "../styles/flat.css";
 // API: https://github.com/lewagon/flats-boilerplate/blob/master/flats.json
 
-const Flat = ({flat, selectFlat}) => {
+const Flat = ({flat, selectFlatFn}) => {
   const title = `${flat.price} ${flat.priceCurrency} - ${flat.name}`;
 
   const style = {
@@ -10,10 +10,8 @@ const Flat = ({flat, selectFlat}) => {
   }; // backgroundImage instead of background-image
 
   const handleClick = () => {
-    // handleClick -> center marker when clicked
-    // call the parent method selectFlat ???????????
-    selectFlat(flat);
-  } // onclick?????
+    selectFlatFn(flat);
+  }
 
   return (
     <div className="flat" onClick={handleClick}>
@@ -26,7 +24,6 @@ const Flat = ({flat, selectFlat}) => {
 }
 
 export default Flat;
-
 
 
 // // ============================= NO HOOKS =============================

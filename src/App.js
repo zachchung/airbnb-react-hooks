@@ -5,7 +5,6 @@ import './styles/App.css';
 import Flat from './components/flat';
 import Marker from './components/marker';
 
-
 const App = () => {
   const [flats, setFlats] = useState([]); // filtered flats
   const [allFlats, setAllFlats] = useState([]); // all flats
@@ -19,8 +18,7 @@ const App = () => {
       .then((data) => {
         // console.log(data);
         setFlats(data);
-        setAllFlats(data);
-        // need allFlats for handleSearch which lost all flats
+        setAllFlats(data); // need allFlats for handleSearch which lost all flats
       })
       // debugger
   }, []); // componenetDidMount: need to pass an empty array as 2nd argument
@@ -32,7 +30,7 @@ const App = () => {
 
   const handleSearch = (event) => {
     setSearch(event.target.value);
-    setFlats(allFlats.filter((flat) => new RegExp(event.target.value, "i").exec(flat.name)));
+    setFlats(allFlats.filter((flat) => new RegExp(event.target.value, "i").exec(flat.name))); // ?????
     // debugger
   }
 
@@ -54,7 +52,8 @@ const App = () => {
         </div>
         <div className="flats">
           {flats.map((flat) => {
-            return <Flat key={flat.name} flat={flat} selectFlat={selectFlat} />
+            return <Flat key={flat.name} flat={flat} selectFlatFn={selectFlat} /> // pass flat & selectFlatFn to flat.js
+            // key={flat.name} to remove chrome console error (needed whenever loop)
           })}
         </div>
       </div>
@@ -64,16 +63,15 @@ const App = () => {
           zoom={14}>
           {flats.map((flat) => {
             return <Marker key={flat.name} lat={flat.lat} lng={flat.lng} text={flat.price} selected={flat === selectedFlat}/>
-            // if flat selected, change color to yellow
+            // pass text & selected (if selected, change color to yellow) to marker.js
           })}
         </GoogleMapReact>
       </div>
     </div>
-  ); // key={flat.name} to remove chrome console error (needed whenever loop)
+  );
 }
 
 export default App;
-
 
 
 // // ============================= NO HOOKS =============================
